@@ -1,0 +1,11 @@
+{
+  "name": "frequency-oasis",
+  "version": "3.0.0",
+  "description": "Frequency Oasis — Spatial Sound Engineering. An installable, offline-first interactive field school for sound placement.",
+  "private": true,
+  "scripts": {
+    "start": "python3 -m http.server 8080",
+    "icons": "python3 make-icons.py"
+  },
+  "keywords": ["pwa", "audio", "acoustics", "education", "web-audio"]
+}

@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Frequency Oasis — Spatial Sound Engineering</title>
+<meta name="description" content="Interactive spatial sound training for music studios, film sets, cinema playback and live sound. Move equipment through a room, hear the geometry, and learn what must still be measured.">
+<meta name="theme-color" content="#070908">
+<meta name="color-scheme" content="dark">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Oasis">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta property="og:title" content="Frequency Oasis — Spatial Sound Engineering">
+<meta property="og:description" content="Make the room part of the instrument. An interactive field school for placement, reflections, room modes and live-sound judgement.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="icon-512.png">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="extras.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="app">
+
+<header class="top">
+  <div class="brand">
+    <div class="sigil" aria-hidden="true">∿</div>
+    <div>
+      <div class="eyebrow">Frequency Oasis / Field School 001</div>
+      <h1>SPATIAL SOUND ENGINEERING</h1>
+    </div>
+  </div>
+  <div class="topmeta">
+    <span><i class="statusdot">●</i> <span id="connStatus">Prototype / local browser</span></span>
+    <button class="btn ghost small hidden" id="installBtn" type="button">Install app</button>
+    <span class="pill" id="progressPill">0 / 12 modules explored</span>
+  </div>
+</header>
+
+<section class="hero">
+  <div>
+    <div class="eyebrow">Sound placement · Spatial decisions · Practical judgement</div>
+    <h2>Make the room<br><span>part of the instrument.</span></h2>
+    <p>An interactive training environment for music studios, film sets, cinema playback, and live sound. Move equipment through a room, inspect geometry, test a hypothesis, and learn what must still be measured in the real world.</p>
+    <svg class="wavestrip" viewBox="0 0 600 40" preserveAspectRatio="none" aria-hidden="true">
+      <path class="w1" d="M0 20 Q 25 0 50 20 T 100 20 T 150 20 T 200 20 T 250 20 T 300 20 T 350 20 T 400 20 T 450 20 T 500 20 T 550 20 T 600 20 T 650 20 T 700 20"/>
+      <path class="w2" d="M0 20 Q 37 36 75 20 T 150 20 T 225 20 T 300 20 T 375 20 T 450 20 T 525 20 T 600 20 T 675 20"/>
+    </svg>
+  </div>
+  <div class="hero-note"><strong>Engineering rule / 001</strong>Visuals help you see relationships. Measurements and controlled listening tell you whether the real system behaves as expected. This lab labels the difference.</div>
+</section>
+
+<nav class="nav" aria-label="Main navigation">
+  <button class="active" data-view="lab" type="button">01 / Spatial lab</button>
+  <button data-view="lessons" type="button">02 / Lesson library</button>
+  <button data-view="missions" type="button">03 / Field missions</button>
+  <button data-view="assessment" type="button">04 / Final assessment</button>
+  <button data-view="bench" type="button">05 / Sound bench</button>
+  <button data-view="log" type="button">06 / Field log</button>
+</nav>
+
+<div id="main" tabindex="-1"></div>
+
+<!-- ───────────────────────── 01 SPATIAL LAB ───────────────────────── -->
+<main id="labView">
+<div class="workspace">
+<div class="col">
+<section class="panel">
+  <div class="panel-head"><h3 id="sceneTitle">Control room / stereo geometry</h3><small id="sceneType">PERSPECTIVE ROOM MODEL</small></div>
+  <div class="stage">
+    <canvas id="scene" tabindex="0" aria-label="Interactive perspective room model. Drag source and listener markers to reposition them. With the canvas focused, arrow keys move the listener and Alt plus arrow keys move the monitors."></canvas>
+    <div class="hud"><div class="hudtag"><b>SPATIAL LAB</b> · <span id="viewTag">MODEL VIEW</span></div><div class="hudtag" id="scenarioTag">STUDIO / 01</div></div>
+    <div class="legend">
+      <span><i class="dot" style="background:#c9a84c"></i>Source / speaker</span>
+      <span><i class="dot" style="background:#8db3c9"></i>Listener / mic</span>
+      <span><i class="dot" style="background:#df6252"></i>Boundary / risk</span>
+      <span>Dashed = direct path</span>
+    </div>
+    <div class="stage-hint">Drag the gold or blue markers · or focus and use arrow keys</div>
+  </div>
+  <div class="toolsbar">
+    <button class="toolbtn active" data-overlay="direct" type="button" aria-pressed="true">Direct path</button>
+    <button class="toolbtn" data-overlay="reflections" type="button" aria-pressed="false">Reflection paths</button>
+    <button class="toolbtn" data-overlay="coverage" type="button" aria-pressed="false">Coverage zones</button>
+    <button class="toolbtn" data-overlay="labels" type="button" aria-pressed="false">Dimension labels</button>
+    <button class="toolbtn" data-overlay="waves" type="button" aria-pressed="false" title="Wavefronts are slowed enormously so you can watch them">Wavefronts</button>
+    <button class="toolbtn" data-overlay="loop" type="button" aria-pressed="false" title="Live sound: trace the microphone → loudspeaker loop">Feedback loop</button>
+    <button class="toolbtn" id="viewToggle" type="button" aria-pressed="false">Plan view</button>
+    <button class="toolbtn" id="resetPosition" type="button">Reset positions</button>
+  </div>
+  <div class="presets" role="group" aria-label="Quick layouts">
+    <span class="presets-label">Quick layouts</span>
+    <button class="chip" data-preset="equilateral" type="button">Equilateral</button>
+    <button class="chip" data-preset="wide" type="button">Too wide</button>
+    <button class="chip" data-preset="narrow" type="button">Too narrow</button>
+    <button class="chip" data-preset="offcentre" type="button">Off-centre seat</button>
+    <button class="chip" data-preset="wall" type="button">Seat at rear wall</button>
+  </div>
+  <div class="controls" id="controls">
+    <div class="control"><label for="widthRange">Room width <output id="widthOut">5.0 m</output></label><input id="widthRange" type="range" min="3" max="12" step=".1" value="5"></div>
+    <div class="control"><label for="depthRange">Room depth <output id="depthOut">6.0 m</output></label><input id="depthRange" type="range" min="3" max="14" step=".1" value="6"></div>
+    <div class="control"><label for="sourceRange">Source position / front-back <output id="sourceOut">1.0 m</output></label><input id="sourceRange" type="range" min=".4" max="4" step=".1" value="1"></div>
+    <div class="control"><label for="listenerRange">Listener position / front-back <output id="listenerOut">3.2 m</output></label><input id="listenerRange" type="range" min="1" max="10" step=".1" value="3.2"></div>
+    <div class="control"><label for="spacingRange">Stereo spacing <output id="spacingOut">1.8 m</output></label><input id="spacingRange" type="range" min=".8" max="4" step=".1" value="1.8"></div>
+    <div class="control"><label for="scenarioSelect">Environment</label><select id="scenarioSelect"><option value="studio">Music studio</option><option value="film">Film / dialogue</option><option value="cinema">Cinema / surround</option><option value="live">Live sound</option></select></div>
+    <div class="control"><label for="offsetRange">Listener position / left-right <output id="offsetOut">0.0 m</output></label><input id="offsetRange" type="range" min="-2.5" max="2.5" step=".1" value="0"></div>
+    <div class="control"><label for="heightRange">Room height <output id="heightOut">2.7 m</output></label><input id="heightRange" type="range" min="2.2" max="6" step=".1" value="2.7"></div>
+  </div>
+</section>
+
+<section class="panel" id="audioPanel">
+  <div class="panel-head"><h3>Hear the geometry</h3><small>WEB AUDIO · DIRECT PATH + PAN</small></div>
+  <div class="audio-body">
+    <div class="audio-row">
+      <button class="btn" id="audioPlay" type="button" aria-pressed="false">▶ Play</button>
+      <label class="inline">Signal
+        <select id="audioSignal"><option value="pink">Pink-noise pulses</option><option value="click">Clicks</option><option value="tone">Pure tone</option></select>
+      </label>
+      <label class="inline" id="audioFreqWrap">Tone
+        <input id="audioFreq" type="number" min="40" max="2000" step="1" value="440"> Hz
+      </label>
+      <label class="inline">Speakers
+        <select id="audioSolo"><option value="both">Both</option><option value="L">Left only</option><option value="R">Right only</option></select>
+      </label>
+    </div>
+    <div class="audio-row">
+      <label class="inline grow">Level <input id="audioVol" type="range" min="0" max="35" step="1" value="10"></label>
+      <label class="inline"><input id="audioRefl" type="checkbox"> Add illustrative wall reflections</label>
+    </div>
+    <p class="audio-note">Use headphones. This renders each speaker’s direct-path delay, distance level and left/right pan from the geometry above. With reflections on, six first-order wall paths are added at a fixed illustrative strength so you can hear comb filtering. It is not a room simulation. Start quiet and raise the level slowly.</p>
+  </div>
+</section>
+</div>
+
+<aside class="side">
+<section class="panel lesson">
+  <div class="eyebrow" id="lessonKicker">FIELD MODULE 02 / AUDIO STUDIO</div>
+  <h3 id="lessonTitle">Build a stable listening triangle.</h3>
+  <p id="lessonText">Start with symmetry. A matched left/right layout and a listening position near the apex of an equilateral triangle are useful starting points, not universal laws.</p>
+  <div class="rule" id="lessonRule">This model shows geometry. It does not calculate a room’s full frequency response.</div>
+  <div class="challenge">
+    <div class="eyebrow">Try this</div>
+    <p id="challengeText"></p>
+    <button class="btn ghost" id="challengeBtn" type="button">Set up this experiment</button>
+  </div>
+  <div class="actions">
+    <button class="btn" id="runCheck" type="button">Run placement check</button>
+    <button class="btn ghost" id="resetScenario" type="button">Reset scenario</button>
+    <button class="btn ghost" id="openLesson" type="button">Read full lesson ↗</button>
+  </div>
+</section>
+
+<section class="panel">
+  <div class="panel-head"><h3>Engineering readout</h3><small>LIVE DERIVED VALUES</small></div>
+  <div class="metrics">
+    <div class="metric"><span>Direct path</span><strong id="distanceMetric">2.50 m</strong><small>source to listener</small></div>
+    <div class="metric"><span>Propagation time</span><strong id="delayMetric">7.3 ms</strong><small>approx. at 343 m/s</small></div>
+    <div class="metric"><span>Triangle ratio</span><strong id="ratioMetric">1.22</strong><small>listener depth ÷ spacing</small></div>
+    <div class="metric"><span>Left/right balance</span><strong id="symMetric">CHECK</strong><small>basic geometric symmetry</small></div>
+    <div class="metric"><span>Axial mode / width</span><strong id="modeMetric">34.3 Hz</strong><small>first idealized width mode</small></div>
+    <div class="metric"><span>Model confidence</span><strong id="resultMetric">GEOMETRY</strong><small id="resultSub">Not a room measurement</small></div>
+  </div>
+  <div class="metrics-sep"><span>Stereo geometry</span></div>
+  <div class="metrics">
+    <div class="metric"><span>Toe-in angle</span><strong id="toeMetric">—</strong><small>monitor aim to listener</small></div>
+    <div class="metric"><span>Stereo angle</span><strong id="angMetric">—</strong><small>between L and R</small></div>
+    <div class="metric"><span>L/R arrival offset</span><strong id="lrTimeMetric">—</strong><small id="lrTimeHint">direct path only</small></div>
+    <div class="metric"><span>L/R level offset</span><strong id="lrLevelMetric">—</strong><small id="lrLevelHint">spreading loss only</small></div>
+    <div class="metric"><span>Distance ÷ spacing</span><strong id="dspMetric">—</strong><small>equilateral = 1.00</small></div>
+    <div class="metric"><span>Nearest wall to listener</span><strong id="wallMetric">—</strong><small>plan distance</small></div>
+  </div>
+</section>
+
+<section class="panel">
+  <div class="panel-head"><h3>Field notes</h3><small id="noteCount">0 SAVED</small></div>
+  <div style="padding:12px">
+    <textarea id="fieldNotes" aria-label="Field notes" placeholder="Record your hypothesis, what you changed, and what you would measure in the real room..." style="width:100%;min-height:84px;resize:vertical;background:#090c0a;border:1px solid var(--line);border-radius:3px;color:var(--bone);padding:10px;font:12px/1.5 inherit"></textarea>
+    <div class="actions"><button class="btn ghost" id="saveNote" type="button">Save note</button><button class="btn ghost" id="clearNote" type="button">Clear text</button></div>
+    <div id="savedNotes" style="display:grid;gap:6px;margin-top:10px"></div>
+  </div>
+</section>
+</aside>
+</div>
+
+<div class="section-title"><h3>Read the room before you touch the sound</h3><p>Every conclusion has a scope. Know what the model can prove.</p></div>
+<div class="grid3">
+  <article class="infocard"><div class="num">01 / POSITION</div><h4>Geometry is the first layer</h4><p>Check source/listener distance, symmetry, aiming, obstructions, and boundaries before reaching for processing.</p></article>
+  <article class="infocard"><div class="num">02 / PHYSICS</div><h4>Boundaries are active</h4><p>Reflections, interference, room modes, directivity, and absorption affect sound in frequency-dependent ways.</p></article>
+  <article class="infocard"><div class="num">03 / VERIFICATION</div><h4>Measure what matters</h4><p>Use level-matched listening, appropriate measurements, manufacturer guidance, and documented test conditions.</p></article>
+</div>
+</main>
+
+<!-- ───────────────────────── 02 LESSONS ───────────────────────── -->
+<main id="lessonsView" class="hidden">
+<div class="section-title"><h3>Lesson library / 12 field modules</h3><p>Choose a module to load its environment and learning target.</p></div>
+<div class="modules" id="moduleList"></div>
+<div class="lesson-layout" style="margin-top:14px">
+  <section class="panel article">
+    <div class="eyebrow">Reference card / core concepts</div>
+    <h3>Numbers that help you reason</h3>
+    <h4>Sound propagation time</h4>
+    <div class="formula">time (ms) ≈ distance (m) ÷ 343 × 1000</div>
+    <p>At ordinary room temperature, sound travels at approximately 343 metres per second. Actual speed changes with temperature and conditions. The readout estimates direct-path travel time; it does not model all arrivals.</p>
+    <h4>Idealized axial room modes</h4>
+    <div class="formula">fₙ = n × c ÷ (2L)</div>
+    <p>For an ideal rectangular room, the axial mode series along one dimension depends on sound speed, the dimension length, and integer mode order n. Real rooms have boundary losses, coupled modes, openings, furniture, and other complications. A single calculated frequency is not a complete diagnosis.</p>
+    <h4>Inverse-square intuition</h4>
+    <p>In a free field, doubling distance from a point-like source reduces sound pressure level by roughly 6 dB. Rooms are not free fields: reflections, source directivity, and boundaries can change the observed result.</p>
+    <h4>Reflection delay (image-source geometry)</h4>
+    <div class="formula">Δt (ms) = (path<sub>reflected</sub> − path<sub>direct</sub>) ÷ 343 × 1000</div>
+    <p>Mirror the source in a wall and measure the straight line to the listener: that length is the reflected path. The Sound bench does this for all six surfaces. It gives timing and spreading loss only, not absorption or directivity.</p>
+  </section>
+  <aside class="panel article">
+    <div class="eyebrow">Non-negotiable distinction</div>
+    <h3>Illustration is not simulation.</h3>
+    <p>This build has a perspective canvas, draggable position markers, derived geometry, approximate propagation time, and an idealized first axial-mode estimate. It does not solve full acoustic wave equations.</p>
+    <h4>What a production release needs</h4>
+    <ul><li>Validated room-mode and boundary models</li><li>Frequency-dependent absorption and source directivity</li><li>Measured or validated impulse-response examples</li><li>Format-specific cinema and live-system references</li><li>Expert review, accessible controls, and practical scoring</li></ul>
+    <p>Do not present simulated SPL, RT60, phase response, or certified placement compliance until those calculations are actually implemented and validated.</p>
+  </aside>
+</div>
+<div class="section-title"><h3>Glossary</h3><input id="glossSearch" class="search" type="search" placeholder="Filter terms…" aria-label="Filter glossary"></div>
+<div class="gloss" id="glossary"></div>
+</main>
+
+<!-- ───────────────────────── 03 MISSIONS ───────────────────────── -->
+<main id="missionsView" class="hidden">
+<div class="section-title"><h3>Field missions / prove the decision</h3><p>Check each task only after completing it in the lab or in a real setup.</p></div>
+<div class="workspace">
+  <section class="panel">
+    <div class="panel-head"><h3>Mission board</h3><small id="missionCount">SELF-REPORTED PRACTICE</small></div>
+    <div class="mission-list" id="missionList"></div>
+  </section>
+  <section class="panel article">
+    <div class="eyebrow">Mission protocol</div>
+    <h3>Hypothesis → controlled change → evidence</h3>
+    <p>Before each mission, write what you think is wrong. Change one variable. Listen or measure under controlled conditions. Record what changed and what did not.</p>
+    <h4>Evidence checklist</h4>
+    <ul><li>Setup and equipment documented</li><li>One change isolated at a time</li><li>Listening level matched where appropriate</li><li>Measurement method named</li><li>Limitations and next test recorded</li></ul>
+    <div class="rule">The checklist tracks your practice. It cannot independently verify that a real-world task was completed correctly.</div>
+  </section>
+</div>
+</main>
+
+<!-- ───────────────────────── 04 ASSESSMENT ───────────────────────── -->
+<main id="assessmentView" class="hidden">
+<div class="section-title"><h3>Final assessment / placement judgement</h3><p>12 questions · 75% pass threshold · feedback explains the principle.</p></div>
+<div class="workspace">
+  <section class="panel quiz">
+    <div class="eyebrow" id="quizKicker">ASSESSMENT 01 / 12</div>
+    <div class="progress"><div id="quizProgress"></div></div>
+    <h3 id="quizTitle">Choose the defensible move.</h3>
+    <p class="question" id="quizQuestion"></p>
+    <div class="answers" id="answers" role="radiogroup" aria-label="Answer choices"></div>
+    <div id="quizFeedback" class="feedback hidden" aria-live="polite"></div>
+    <div id="quizRevisit" class="revisit hidden"></div>
+    <div class="actions">
+      <button class="btn" id="submitAnswer" type="button">Lock answer</button>
+      <button class="btn ghost hidden" id="nextQuestion" type="button">Next question</button>
+      <button class="btn ghost hidden" id="restartQuiz" type="button">Restart assessment</button>
+    </div>
+    <p class="kbd-hint">Keys: <kbd>A</kbd> <kbd>B</kbd> <kbd>C</kbd> choose · <kbd>Enter</kbd> lock / next</p>
+  </section>
+  <aside class="panel article">
+    <div class="eyebrow">Assessment standard</div>
+    <h3>Reason from evidence.</h3>
+    <p>The test covers studio geometry, room acoustics, microphone placement, film recording, cinema layouts, live sound, and the limits of models.</p>
+    <h4>Pass threshold</h4>
+    <div class="formula">9 / 12 correct = 75%</div>
+    <p>Passing here is a prototype learning milestone, not an accredited industry qualification. In a full release, add practical placement submissions and reviewed rubrics.</p>
+    <div id="scoreHistory" class="rule">No completed attempt in this session.</div>
+  </aside>
+</div>
+</main>
+
+<!-- ───────────────────────── 05 SOUND BENCH ───────────────────────── -->
+<main id="benchView" class="hidden">
+<div class="section-title"><h3>Sound bench / numbers behind the picture</h3><p id="benchRoom">Using the room from the Spatial lab.</p></div>
+<div class="grid2">
+  <section class="panel">
+    <div class="panel-head"><h3>Axial room modes</h3><small>IDEALIZED · TAP A STEM TO HEAR IT</small></div>
+    <div class="bench-body">
+      <canvas id="modeCanvas" class="benchcanvas" aria-label="Chart of idealized axial room modes for depth, width and height up to 300 hertz"></canvas>
+      <div class="legend-inline"><span><i class="dot" style="background:#c9a84c"></i>Depth</span><span><i class="dot" style="background:#8db3c9"></i>Width</span><span><i class="dot" style="background:#9bc7a6"></i>Height</span></div>
+      <div id="modeInfo" class="bench-text"></div>
+      <p class="fine">Axial modes only. Tangential and oblique modes, damping, boundary absorption and the listener’s position are not modelled, so this chart cannot predict how a real room sounds. Many phones and laptops cannot reproduce the lowest tones; keep the level low.</p>
+    </div>
+  </section>
+  <section class="panel">
+    <div class="panel-head"><h3>Reflection ledger</h3><small>IMAGE-SOURCE GEOMETRY</small></div>
+    <div class="bench-body">
+      <div class="bench-inputs">
+        <label class="inline">Source <select id="ledgerSource"></select></label>
+        <label class="inline">Speaker / mic height <input id="ledgerSrcH" type="number" min=".2" max="5" step=".05" value="1.1"> m</label>
+        <label class="inline">Ear height <input id="ledgerEarH" type="number" min=".2" max="5" step=".05" value="1.2"> m</label>
+      </div>
+      <canvas id="timelineCanvas" class="benchcanvas short" aria-label="Timeline of first-order reflection arrival times after the direct sound"></canvas>
+      <div class="tablewrap"><table class="ledger" id="ledgerTable"></table></div>
+      <p class="fine">Heights here are physical heights you set; the lab’s marker heights are only for drawing. Level is spreading loss only (distance ratio), with no absorption or directivity. The 20 ms flag is a teaching rule of thumb, not a standard.</p>
+    </div>
+  </section>
+  <section class="panel">
+    <div class="panel-head"><h3>Distance and level</h3><small>FREE-FIELD INTUITION</small></div>
+    <div class="bench-body">
+      <canvas id="splCanvas" class="benchcanvas short" aria-label="Free-field level drop against distance"></canvas>
+      <div class="bench-inputs">
+        <label class="inline grow">Reference <input id="splRef" type="range" min=".5" max="8" step=".1" value="1"> <output id="splRefOut">1.0 m</output></label>
+        <label class="inline grow">Listener <input id="splDist" type="range" min=".5" max="40" step=".1" value="4"> <output id="splDistOut">4.0 m</output></label>
+      </div>
+      <div id="splInfo" class="bench-text"></div>
+      <p class="fine">Free field only: 20 × log₁₀(distance ÷ reference). In a room, reflections and directivity change the real result.</p>
+    </div>
+  </section>
+  <section class="panel">
+    <div class="panel-head"><h3>Speed of sound and delay</h3><small>TEMPERATURE-AWARE</small></div>
+    <div class="bench-body">
+      <div class="bench-inputs">
+        <label class="inline grow">Air temperature <input id="tempRange" type="range" min="-10" max="40" step="1" value="20"> <output id="tempOut">20 °C</output></label>
+      </div>
+      <div class="metrics tight">
+        <div class="metric"><span>Speed of sound</span><strong id="cOut">343.4 m/s</strong><small>c ≈ 331.3 + 0.606 × T</small></div>
+        <div class="metric"><span>One metre takes</span><strong id="perMetre">2.91 ms</strong><small>at this temperature</small></div>
+      </div>
+      <div class="bench-inputs">
+        <label class="inline">Distance <input id="calcDist" type="number" min="0" step="0.01" value="3"> m</label>
+        <span class="arrow">⇄</span>
+        <label class="inline">Delay <input id="calcMs" type="number" min="0" step="0.1" value="8.7"> ms</label>
+      </div>
+      <div id="notchInfo" class="bench-text"></div>
+      <p class="fine">The lab’s readout uses a fixed 343 m/s. This calculator shows how much that moves with temperature.</p>
+    </div>
+  </section>
+</div>
+</main>
+
+<!-- ───────────────────────── 06 FIELD LOG ───────────────────────── -->
+<main id="logView" class="hidden">
+<div class="section-title"><h3>Field log / your progress</h3><p>Saved on this device only. Nothing is uploaded.</p></div>
+<div class="workspace">
+  <section class="panel">
+    <div class="panel-head"><h3>Field passport</h3><small>SELF-REPORTED PRACTICE</small></div>
+    <div class="passport">
+      <div class="ring" id="ringWrap">
+        <svg viewBox="0 0 120 120" aria-hidden="true"><circle class="rb" cx="60" cy="60" r="52"/><circle class="rf" id="ringFill" cx="60" cy="60" r="52" stroke-dasharray="326.7" stroke-dashoffset="326.7"/></svg>
+        <div class="ringtxt"><strong id="ringPct">0%</strong><small>overall</small></div>
+      </div>
+      <div class="pstats">
+        <div class="metric"><span>Modules explored</span><strong id="pMods">0 / 12</strong></div>
+        <div class="metric"><span>Missions ticked</span><strong id="pMiss">0 / 7</strong></div>
+        <div class="metric"><span>Best assessment</span><strong id="pBest">—</strong></div>
+        <div class="metric"><span>Field notes</span><strong id="pNotes">0</strong></div>
+      </div>
+    </div>
+    <div class="panel-head" style="border-top:1px solid var(--line)"><h3>Field notes</h3><small id="logNoteCount">0 SAVED</small></div>
+    <div id="logNotes" class="lognotes"></div>
+    <div class="actions" style="padding:0 12px 14px">
+      <button class="btn" id="exportNotes" type="button">Export notes (.md)</button>
+      <button class="btn ghost" id="exportJson" type="button">Back up progress (.json)</button>
+      <button class="btn danger" id="resetAll" type="button">Reset all progress</button>
+    </div>
+  </section>
+  <aside class="side">
+    <section class="panel article">
+      <div class="eyebrow">Install</div>
+      <h3>Keep it in your kit bag.</h3>
+      <p>Frequency Oasis is an installable offline app. Once it has loaded online one time, every lesson, the lab, the bench and the assessment work without a connection.</p>
+      <div id="installState" class="rule">Checking install status…</div>
+      <div class="actions"><button class="btn" id="installBtn2" type="button" disabled>Install app</button></div>
+      <h4>On iPhone or iPad</h4>
+      <p>Open in Safari, tap Share, then Add to Home Screen.</p>
+    </section>
+    <section class="panel article">
+      <div class="eyebrow">Keyboard</div>
+      <h3>Shortcuts</h3>
+      <ul class="keys">
+        <li><kbd>1</kbd>–<kbd>6</kbd> switch views</li>
+        <li><kbd>Space</kbd> play / stop the lab sound</li>
+        <li><kbd>P</kbd> toggle plan view</li>
+        <li>Focus the canvas: <kbd>←</kbd><kbd>↑</kbd><kbd>↓</kbd><kbd>→</kbd> move listener, <kbd>Alt</kbd> + arrows move monitors, <kbd>Shift</kbd> = bigger steps</li>
+      </ul>
+    </section>
+  </aside>
+</div>
+</main>
+
+<footer class="foot"><span>Frequency Oasis · Spatial Sound Engineering</span><span>Craft first. Verify in the room.</span><span>Build 03 / educational prototype · installable</span></footer>
+</div>
+
+<div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+<noscript><p style="padding:24px;color:#f0eadc">Frequency Oasis needs JavaScript to run the interactive lab.</p></noscript>
+
+<script src="data.js"></script>
+<script src="content-extra.js"></script>
+<script src="app.js"></script>
+<script src="audio.js"></script>
+<script src="bench.js"></script>
+<script src="pwa.js"></script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Frequency Oasis">
+<defs>
+<radialGradient id="bg" cx="78%" cy="-6%" r="80%"><stop offset="0" stop-color="#3a3519"/><stop offset=".55" stop-color="#0d100e"/><stop offset="1" stop-color="#070908"/></radialGradient>
+<linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e6cb70"/><stop offset="1" stop-color="#b58f38"/></linearGradient>
+</defs>
+<rect width="512" height="512" rx="112" fill="url(#bg)"/>
+<circle cx="256" cy="256" r="188" fill="none" stroke="url(#gold)" stroke-width="9"/>
+<circle cx="256" cy="256" r="152" fill="none" stroke="#c9a84c" stroke-opacity=".28" stroke-width="3"/>
+<path d="M104 196 C 146 96, 214 96, 256 196 S 366 296, 408 196" fill="none" stroke="url(#gold)" stroke-width="26" stroke-linecap="round"/>
+<g stroke="#c9a84c" stroke-opacity=".35" stroke-width="3" stroke-dasharray="4 8" stroke-linecap="round"><path d="M216 302 L256 371 L296 302 Z" fill="none"/></g>
+<circle cx="216" cy="302" r="15" fill="#c9a84c"/><circle cx="296" cy="302" r="15" fill="#c9a84c"/>
+<circle cx="256" cy="371" r="17" fill="#8db3c9" stroke="#d7e8ef" stroke-width="3"/>
+</svg>
